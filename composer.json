@@ -1,0 +1,41 @@
+{
+    "name": "secotrust/sabredav-bundle",
+    "type": "symfony-bundle",
+    "description": "This bundle integrates the SabreDAV library into Symfony2",
+    "keywords": ["SabreDAV", "WebDAV", "CalDAV", "CardDAV", "iCalendar"],
+    "homepage": "https://github.com/secotrust/SecotrustSabreDavBundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Henrik Westphal",
+            "email": "henrik.westphal@gmail.com"
+        },
+        {
+            "name": "secotrust IT GmbH & Co. KG",
+            "homepage": "http://www.secotrust.de/"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "https://github.com/secotrust/SecotrustSabreDavBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.2",
+        "sabre/dav": "1.8.*"
+    },
+    "suggest": {
+        "sabre/vobject": "~3.0.0",
+        "knplabs/knp-gaufrette-bundle": "0.2.*"
+    },
+    "autoload": {
+        "psr-0": { "Secotrust\\Bundle\\SabreDavBundle": "" }
+    },
+    "target-dir": "Secotrust/Bundle/SabreDavBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

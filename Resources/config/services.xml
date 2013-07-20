@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="secotrust.sabredav.controller.class">Secotrust\Bundle\SabreDavBundle\Controller\SabreDavController</parameter>
+        <parameter key="secotrust.sabredav.server.class">Sabre\DAV\Server</parameter>
+        <parameter key="secotrust.sabredav.root.class">Sabre\DAV\FS\Directory</parameter>
+        <parameter key="secotrust.sabredav.lock_backend.class">Sabre\DAV\Locks\Backend\File</parameter>
+        <parameter key="secotrust.sabredav.lock_plugin.class">Sabre\DAV\Locks\Plugin</parameter>
+        <parameter key="secotrust.sabredav.auth_backend.class">Sabre\DAV\Auth\Backend\File</parameter>
+        <parameter key="secotrust.sabredav.auth_plugin.class">Sabre\DAV\Auth\Plugin</parameter>
+        <parameter key="secotrust.sabredav.browser_plugin.class">Sabre\DAV\Browser\Plugin</parameter>
+        <parameter key="secotrust.sabredav.content_type_plugin.class">Sabre\DAV\Browser\GuessContentType</parameter>
+        <parameter key="secotrust.sabredav.temp_plugin.class">Sabre\DAV\TemporaryFileFilterPlugin</parameter>
+        <parameter key="secotrust.sabredav.mount_plugin.class">Sabre\DAV\Mount\Plugin</parameter>
+        <parameter key="secotrust.sabredav.patch_plugin.class">Sabre\DAV\PartialUpdate\Plugin</parameter>
+    </parameters>
+
+    <services>
+        <service id="secotrust.sabredav.controller" class="%secotrust.sabredav.controller.class%">
+            <argument type="service" id="secotrust.sabredav.server" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+        <service id="secotrust.sabredav.server" class="%secotrust.sabredav.server.class%">
+            <argument type="service" id="secotrust.sabredav_root" />
+        </service>
+        <service id="secotrust.sabredav_root" class="%secotrust.sabredav.root.class%" public="false">
+            <argument />
+        </service>
+        <service id="secotrust.sabredav_lock_backend" class="%secotrust.sabredav.lock_backend.class%" public="false">
+            <argument>%kernel.cache_dir%/sabredav/locks</argument>
+        </service>
+        <service id="secotrust.sabredav_lock_plugin" class="%secotrust.sabredav.lock_plugin.class%" public="false">
+            <argument type="service" id="secotrust.sabredav_lock_backend" />
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+        <service id="secotrust.sabredav_auth_backend" class="%secotrust.sabredav.auth_backend.class%" public="false">
+            <argument />
+        </service>
+        <service id="secotrust.sabredav_auth_plugin" class="%secotrust.sabredav.auth_plugin.class%" public="false">
+            <argument type="service" id="secotrust.sabredav_auth_backend" />
+            <argument>SabreDAV</argument>
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+        <service id="secotrust.sabredav_browser_plugin" class="%secotrust.sabredav.browser_plugin.class%" public="false">
+            <argument>false</argument>
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+        <service id="secotrust.sabredav_content_type_plugin" class="%secotrust.sabredav.content_type_plugin.class%" public="false">
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+        <service id="secotrust.sabredav_temp_plugin" class="%secotrust.sabredav.temp_plugin.class%" public="false">
+            <argument>%kernel.cache_dir%/sabredav/temp</argument>
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+        <service id="secotrust.sabredav.mount_plugin" class="%secotrust.sabredav.mount_plugin.class%" public="false">
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+        <service id="secotrust.sabredav.patch_plugin" class="%secotrust.sabredav.patch_plugin.class%" public="false">
+            <tag name="secotrust.sabredav.plugin" />
+        </service>
+
+        <service id="secotrust.sabredav.event_listener" class="Secotrust\Bundle\SabreDavBundle\SabreDav\EventListener">
+            <tag name="kernel.event_listener" event="sabredav.foo" method="onEvent" />
+        </service>
+    </services>
+</container>

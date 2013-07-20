@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="secotrust_sabre_dav" pattern="/dav{url}" methods="HEAD,GET,POST,OPTIONS,PROPFIND,PROPPATCH,MKCOL,COPY,MOVE,DELETE,LOCK,UNLOCK,PUT,PATCH,REPORT">
+        <default key="_controller">secotrust.sabredav.controller:execAction</default>
+        <requirement key="url">/?.*</requirement>
+    </route>
+</routes>
