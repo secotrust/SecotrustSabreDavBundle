@@ -12,7 +12,6 @@
 namespace Secotrust\Bundle\SabreDavBundle;
 
 use Secotrust\Bundle\SabreDavBundle\DependencyInjection\Compiler\PluginPass;
-use Secotrust\Bundle\SabreDavBundle\DependencyInjection\Compiler\RoutingPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
