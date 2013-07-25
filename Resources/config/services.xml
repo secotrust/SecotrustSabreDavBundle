@@ -25,10 +25,11 @@
             <argument type="service" id="event_dispatcher" />
         </service>
         <service id="secotrust.sabredav.server" class="%secotrust.sabredav.server.class%">
-            <argument type="service" id="secotrust.sabredav_root" />
+            <argument />
         </service>
         <service id="secotrust.sabredav_root" class="%secotrust.sabredav.root.class%" public="false">
             <argument />
+            <tag name="secotrust.sabredav.collection" />
         </service>
         <service id="secotrust.sabredav_lock_backend" class="%secotrust.sabredav.lock_backend.class%" public="false">
             <argument>%kernel.cache_dir%/sabredav/locks</argument>

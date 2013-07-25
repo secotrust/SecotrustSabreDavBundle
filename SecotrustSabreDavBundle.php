@@ -11,6 +11,7 @@
 
 namespace Secotrust\Bundle\SabreDavBundle;
 
+use Secotrust\Bundle\SabreDavBundle\DependencyInjection\Compiler\CollectionPass;
 use Secotrust\Bundle\SabreDavBundle\DependencyInjection\Compiler\PluginPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,6 +27,7 @@ class SecotrustSabreDavBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+        $container->addCompilerPass(new CollectionPass());
         $container->addCompilerPass(new PluginPass());
     }
 }
