@@ -31,9 +31,20 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('root_dir')->example('%kernel.root_dir%/../web/dav')->isRequired()->end()
+                ->scalarNode('root_dir')->example('%kernel.root_dir%/../web/dav')->defaultNull()->end()
                 ->scalarNode('base_uri')->example('/app_dev.php/dav/')->isRequired()->end()
-                ->scalarNode('htdigest')->example('%kernel.root_dir%/../.htdigest')->defaultNull()->end()
+                ->arrayNode('plugins')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('auth')->defaultFalse()->end()
+                        ->booleanNode('browser')->defaultFalse()->end()
+                        ->booleanNode('lock')->defaultTrue()->end()
+                        ->booleanNode('temp')->defaultTrue()->end()
+                        ->booleanNode('mount')->defaultFalse()->end()
+                        ->booleanNode('patch')->defaultFalse()->end()
+                        ->booleanNode('content_type')->defaultFalse()->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

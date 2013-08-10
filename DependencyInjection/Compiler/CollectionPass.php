@@ -30,7 +30,9 @@ class CollectionPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('secotrust.sabredav.collection') as $id => $attr) {
             $collections[] = new Reference($id);
         }
-        if (1 === count($collections)) {
+        if (empty($collections)) {
+            throw new \LogicException('You have to tag at least one service with "secotrust.sabredav.collection".');
+        } elseif (1 === count($collections)) {
             $serverDefinition->replaceArgument(0, $collections[0]);
         } else {
             $serverDefinition->replaceArgument(0, $collections);

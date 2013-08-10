@@ -30,20 +30,22 @@ class SecotrustSabreDavExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
-
-        $container->getDefinition('secotrust.sabredav_root')->replaceArgument(0, $config['root_dir']);
-
-        if ($config['htdigest']) {
-            $container->getDefinition('secotrust.sabredav_auth_backend')->replaceArgument(0, $config['htdigest']);
-        } else {
-            $container->getDefinition('secotrust.sabredav_auth_plugin')->clearTag('secotrust.sabredav.plugin');
-        }
+        $loader->load('services/services.xml');
 
         if ($config['base_uri']) {
             $container->getDefinition('secotrust.sabredav.server')->addMethodCall('setBaseUri', array($config['base_uri']));
         }
 
-        //$container->getDefinition('secotrust.sabredav_temp_plugin')->clearTag('secotrust.sabredav.plugin'); // TODO
+        if ($config['root_dir']) {
+            $container->getDefinition('secotrust.sabredav_root')->replaceArgument(0, $config['root_dir']);
+        } else {
+            $container->getDefinition('secotrust.sabredav_root')->clearTag('secotrust.sabredav.collection');
+        }
+
+        foreach ($config['plugins'] as $plugin => $enabled) {
+            if ($enabled) {
+                $loader->load(sprintf('services/plugins/%s.xml', $plugin));
+            }
+        }
     }
 }
