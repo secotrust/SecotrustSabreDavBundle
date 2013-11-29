@@ -14,7 +14,7 @@ namespace Secotrust\Bundle\SabreDavBundle\Controller;
 use Sabre\DAV\Server;
 use Secotrust\Bundle\SabreDavBundle\SabreDav\HttpRequest;
 use Secotrust\Bundle\SabreDavBundle\SabreDav\HttpResponse;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -29,7 +29,7 @@ class SabreDavController
     private $dav;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 
@@ -37,9 +37,9 @@ class SabreDavController
      * Constructor
      *
      * @param Server $dav
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher
+     * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(Server $dav, EventDispatcher $dispatcher)
+    public function __construct(Server $dav, EventDispatcherInterface $dispatcher)
     {
         $this->dav = $dav;
         $this->dispatcher = $dispatcher; // TODO needed?
